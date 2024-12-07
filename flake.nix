@@ -7,20 +7,41 @@
 
   outputs = {nixpkgs, ...}: let
     system = "x86_64-linux";
+
     pkgs = import nixpkgs {
       inherit system;
       config = {allowUnfree = true;};
     };
   in {
+    packages.${system}.default = pkgs.stdenv.mkDerivation {
+      name = "notificationdaemon";
+      src = ./.;
+
+      buildInputs = with pkgs; [
+        glib
+        libnotify
+        gdb
+        pkg-config
+        gcc
+      ];
+
+      buildPhase = ''
+        make build-dir
+        make main
+      '';
+
+      installPhase = ''
+        mkdir -p $out/bin
+        cp build/watchdog.out $out/bin/watchdog
+      '';
+    };
+
     devShells.${system}.default = pkgs.mkShell {
       name = "notificationdaemon-dev-shell";
 
       packages = with pkgs; [
         gdb
-        cmake
         pkg-config
-        meson
-        ninja
         gcc
         libnotify
         glib
@@ -43,9 +64,9 @@
       shellHook = ''
         echo "Entering devShell for ${system}";
         if command -v zsh; then
-         exec zsh
+          exec zsh
         else
-         exec bash
+          exec bash
         fi
       '';
     };
