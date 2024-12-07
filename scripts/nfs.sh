@@ -24,9 +24,11 @@ function server_configuration() {
     sudo systemctl start nfs-server rpcbind rpc-statd nfs-idmapd
 
     # Add the port to the firewall 
-    sudo ufw allow nfs 
-    sudo ufw allow mountd
-    sudo ufw allow rpc-bind 
+    if [ -x "$(command -v ufw)" ]; then
+        sudo ufw allow nfs 
+        sudo ufw allow mountd 
+        sudo ufw allow rpc-bind 
+    fi
 
     # Create a shared directory & setup the permissions
     sudo mkdir -p $server_path
@@ -35,7 +37,7 @@ function server_configuration() {
 
     # Export the shared directory 
     sudo echo "$server_path $client_ip_address(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a  /etc/exports > /dev/null
-    exportfs -rv
+    sudo exportfs -rv
 }
 
 function client_configuration(){
@@ -47,9 +49,11 @@ function client_configuration(){
     sudo systemctl start rpcbind
 
     # Add the port to the firewall 
-    sudo ufw allow nfs 
-    sudo ufw allow mountd 
-    sudo ufw allow rpc-bind 
+    if [ -x "$(command -v ufw)" ]; then
+        sudo ufw allow nfs 
+        sudo ufw allow mountd 
+        sudo ufw allow rpc-bind 
+    fi
     
     # Create a directory to mount the shared directory 
     sudo mkdir -p $client_path
