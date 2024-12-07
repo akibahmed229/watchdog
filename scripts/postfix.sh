@@ -14,8 +14,11 @@ if [ -z "$mail" ] || [ -z "$password" ] && [ $# -le 2 ]; then
     exit 1
 fi
 
-# Install Postfix and mailutils 
-sudo apt-get install -y postfix mailutils neovim
+
+function install_postfix() {
+    # Install Postfix and mailutils 
+    sudo apt-get install -y postfix mailutils
+}
 
 
 function setup_postfix() {

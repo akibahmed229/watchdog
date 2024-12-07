@@ -15,9 +15,17 @@ if [ $# -le 3 ]; then
     exit 1
 fi
 
+function install_nfs() {
+    # Install NFS server
+    sudo apt install -y nfs-kernel-server \ 
+                        rpcbind \ 
+                        nfs-common \
+                        libnfsidmap1
+}
+
 function server_configuration() {
     # Install NFS server
-    sudo apt install -y nfs-kernel-server rpcbind nfs-common libnfsidmap1
+    install_nfs
 
     # enable and start the nfs-server service 
     sudo systemctl enable nfs-server rpcbind 
@@ -26,8 +34,6 @@ function server_configuration() {
     # Add the port to the firewall 
     if [ -x "$(command -v ufw)" ]; then
         sudo ufw allow nfs 
-        sudo ufw allow mountd 
-        sudo ufw allow rpc-bind 
     fi
 
     # Create a shared directory & setup the permissions
@@ -42,7 +48,7 @@ function server_configuration() {
 
 function client_configuration(){
     # Install NFS client
-    sudo apt install -y nfs-kernel-server rpcbind
+    install_nfs
 
     # Enable and start the nfs-client service 
     sudo systemctl enable rpcbind
@@ -51,8 +57,6 @@ function client_configuration(){
     # Add the port to the firewall 
     if [ -x "$(command -v ufw)" ]; then
         sudo ufw allow nfs 
-        sudo ufw allow mountd 
-        sudo ufw allow rpc-bind 
     fi
     
     # Create a directory to mount the shared directory 
