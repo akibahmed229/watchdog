@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 mail=$1
 password=$2
 hostname=$(hostname -f)
@@ -14,12 +13,10 @@ if [ -z "$mail" ] || [ -z "$password" ] && [ $# -le 2 ]; then
     exit 1
 fi
 
-
 function install_postfix() {
     # Install Postfix and mailutils 
     sudo apt-get install -y postfix mailutils
 }
-
 
 function setup_postfix() {
     # list of configurations to set up Postfix
@@ -61,7 +58,6 @@ function setup_postfix_passwdFile() {
     sudo postmap /etc/postfix/sasl/sasl_passwd 
     sudo rm /etc/postfix/sasl/sasl_passwd
 }
-
 
 # Set up Postfix 
 setup_postfix 

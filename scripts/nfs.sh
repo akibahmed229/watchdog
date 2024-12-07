@@ -73,7 +73,6 @@ read -rp "Configure the server or client
 0. Exit
 " choice
 
-
 case $choice in
     1)
         server_configuration
