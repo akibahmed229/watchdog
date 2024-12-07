@@ -21,7 +21,7 @@ sudo apt-get install -y postfix mailutils neovim
 function setup_postfix() {
     # Set up Postfix to use Gmail as a relay host 
     sudo postconf -e 'relayhost = [smtp.gmail.com]:587'
-    sudo postconf -e 'myhostname= $hostname'
+    sudo postconf -e "myhostname= $hostname"
     
     # Location of sasl_passwd we saved
     sudo postconf -e "smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd"
