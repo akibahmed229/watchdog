@@ -17,7 +17,7 @@ fi
 
 function server_configuration() {
     # Install NFS server
-    sudo apt install -y nfs-kernel-server rpcbind nfs-common 
+    sudo apt install -y nfs-kernel-server rpcbind nfs-common ndsidmap
 
     # enable and start the nfs-server service 
     sudo systemctl enable nfs-server rpcbind 
