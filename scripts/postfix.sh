@@ -38,7 +38,8 @@ function setup_postfix_passwdFile() {
     sudo touch /etc/postfix/sasl/sasl_passwd
     
     # Add Gmail credentials to the sasl_passwd file 
-    sudo echo "[smtp.gmail.com]:587 $mail:$password" > /etc/postfix/sasl/sasl_passwd
+    echo "[smtp.gmail.com]:587 $mail:$password" | sudo tee -a /etc/postfix/sasl/sasl_passwd > /dev/null
+
     
     # Change the permissions of the sasl_passwd file
     sudo chmod 600 /etc/postfix/sasl/sasl_passwd
