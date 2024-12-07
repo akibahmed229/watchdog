@@ -35,6 +35,7 @@ function setup_postfix() {
 
 function setup_postfix_passwdFile() {
     # Create the sasl_passwd file
+    sudo mkdir /etc/postfix/sasl
     sudo touch /etc/postfix/sasl/sasl_passwd
     
     # Add Gmail credentials to the sasl_passwd file 
