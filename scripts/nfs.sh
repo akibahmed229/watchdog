@@ -34,7 +34,7 @@ function server_configuration() {
     sudo chmod 777 $server_path
 
     # Export the shared directory 
-    sudo echo "$server_path $client_ip_address(rw,sync,no_root_squash,no_subtree_check)" >> /etc/exports
+    sudo echo "$server_path $client_ip_address(rw,sync,no_root_squash,no_subtree_check)" | sudo tee -a  /etc/exports > /dev/null
     exportfs -rv
 }
 
