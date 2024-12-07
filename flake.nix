@@ -15,6 +15,7 @@
   in {
     packages.${system}.default = pkgs.stdenv.mkDerivation {
       name = "notificationdaemon";
+
       src = ./.;
 
       buildInputs = with pkgs; [
