@@ -17,11 +17,11 @@ fi
 
 function server_configuration() {
     # Install NFS server
-    sudo apt install -y nfs-kernel-server rpcbind nfs-common nfsidmap
+    sudo apt install -y nfs-kernel-server rpcbind nfs-common libnfsidmap1
 
     # enable and start the nfs-server service 
     sudo systemctl enable nfs-server rpcbind 
-    sudo systemctl start nfs-server rpcbind rpc-statd nfs-idmap
+    sudo systemctl start nfs-server rpcbind rpc-statd nfs-idmapd
 
     # Add the port to the firewall 
     sudo ufw allow nfs 
