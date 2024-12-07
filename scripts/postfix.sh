@@ -3,6 +3,7 @@
 
 mail=$1
 password=$2
+hostname=$(hostname -f)
 
 # check if the user has provided the email and password 
 if [ -z "$mail" ] || [ -z "$password" ] && [ $# -le 2 ]; then
@@ -20,7 +21,7 @@ sudo apt-get install -y postfix mailutils neovim
 function setup_postfix() {
     # Set up Postfix to use Gmail as a relay host 
     sudo postconf -e 'relayhost = [smtp.gmail.com]:587'
-    sudo postconf -e 'myhostname= $(hostname -f)'
+    sudo postconf -e 'myhostname= $hostname'
     
     # Location of sasl_passwd we saved
     sudo postconf -e "smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd"
@@ -35,7 +36,6 @@ function setup_postfix() {
 
 function setup_postfix_passwdFile() {
     # Create the sasl_passwd file
-    sudo mkdir /etc/postfix/sasl
     sudo touch /etc/postfix/sasl/sasl_passwd
     
     # Add Gmail credentials to the sasl_passwd file 
