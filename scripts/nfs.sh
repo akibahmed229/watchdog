@@ -24,9 +24,6 @@ function install_nfs() {
 }
 
 function server_configuration() {
-    # Install NFS server
-    install_nfs
-
     # enable and start the nfs-server service 
     sudo systemctl enable nfs-server rpcbind 
     sudo systemctl start nfs-server rpcbind rpc-statd nfs-idmapd
@@ -47,9 +44,6 @@ function server_configuration() {
 }
 
 function client_configuration(){
-    # Install NFS client
-    install_nfs
-
     # Enable and start the nfs-client service 
     sudo systemctl enable rpcbind
     sudo systemctl start rpcbind
@@ -73,6 +67,10 @@ read -rp "Configure the server or client
 0. Exit
 " choice
 
+# Install NFS server
+install_nfs
+
+# Configure the server or client based on the user's choice
 case $choice in
     1)
         server_configuration

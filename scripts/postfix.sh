@@ -57,11 +57,12 @@ function setup_postfix_passwdFile() {
     # Update Postfix to use the sasl_passwd file and delete the plaintext file
     sudo postmap /etc/postfix/sasl/sasl_passwd 
     sudo rm /etc/postfix/sasl/sasl_passwd
+
+    # Restart postfix
+    sudo systemctl restart postfix
 }
 
 # Set up Postfix 
+install_postfix
 setup_postfix 
 setup_postfix_passwdFile
-
-# Restart postfix
-sudo systemctl restart postfix
