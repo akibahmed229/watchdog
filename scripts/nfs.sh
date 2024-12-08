@@ -17,10 +17,7 @@ fi
 
 function install_nfs() {
     # Install NFS server
-    sudo apt install -y nfs-kernel-server \ 
-                        rpcbind \ 
-                        nfs-common \
-                        libnfsidmap1
+    sudo apt install -y nfs-kernel-server rpcbind nfs-common libnfsidmap1
 }
 
 function server_configuration() {
