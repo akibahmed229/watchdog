@@ -66,15 +66,10 @@ void start_event_loop(int IeventQueue, char *basePath) {
         break;
       case IN_ACCESS:
         notificationMessage = "File accessed\n";
-        break;
-      case IN_CLOSE_WRITE:
-        notificationMessage = "File closed for writing\n";
+        execlp("/bin/sh", "./notify.sh", NULL);
         break;
       case IN_MODIFY:
         notificationMessage = "File modified\n";
-        break;
-      case IN_MOVE_SELF:
-        notificationMessage = "File moved\n";
         break;
       }
 
